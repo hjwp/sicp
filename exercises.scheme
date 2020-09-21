@@ -74,3 +74,90 @@
       (else (iterator b (* b accum) (- current 1) n))))
   (iterator 1 0))
 
+
+
+(define (square x) (* x x))
+
+(define (sum-of-squares x y)
+  (+ (square x) (square y)))
+
+(define (f a)
+  (sum-of-squares (+ a 1) (* a 2)))
+
+; To illustrate this process, let's evaluate the combination
+(f 5)
+
+; We begin by retrieving the body of f:
+(sum-of-squares (+ a 1) (* a 2))
+
+; Then we replace the formal parameter a by the argument 5:
+(sum-of-squares (+ 5 1) (* 5 2))
+
+ ; Thus the problem reduces to the evaluation of a combination with two operands and an operator sum-of-squares. Evaluating this combination involves three subproblems. We must evaluate the operator to get the procedure to be applied, and we must evaluate the operands to get the arguments. Now (+ 5 1) produces 6 and (* 5 2) produces 10, so we must apply the sum-of-squares procedure to 6 and 10. These values are substituted for the formal parameters x and y in the body of sum-of-squares, reducing the expression to
+(sum-of-squares 6 10)
+
+(+ (square 6) (square 10))
+
+; If we use the definition of square, this reduces to
+(+ (* 6 6) (* 10 10))
+
+(+ 36 100)
+
+; normal-order instead:
+(f 5)
+(sum-of-squares (+ 5 1) (* 5 2))
+(+ (square (+ 5 1)) (square (* 5 2)))
+(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))
+
+
+(define (factorial n)
+  (if (= n 1) 1
+      (* n (factorial (- n 1)))))
+
+(factorial 6)
+
+
+(if (= 6 1) 1
+  (* 6 (factorial (- 6 1)))))
+
+(if #f 1
+  (* 6 (factorial (- 6 1)))))
+
+(* 6 (factorial (- 6 1)))))
+
+(* 6 (factorial 5))))
+
+(* 6 (if (= 5 1) 1
+         (* 5 (factorial (- 5 1)))))
+
+(* 6 (* 5 (factorial 4))))
+(* 6 (* 5 (
+
+    (if (= 4 1) 1
+      (* 4 (factorial (- 4 1)))))
+           ))))
+
+
+
+ (define (fact-iter product counter max-count)
+  (if (> counter max-count)
+      product
+      (fact-iter (* counter product)
+                 (+ counter 1)
+                 max-count)))
+
+(define (factorial n) (fact-iter 1 1 n)
+
+
+ (fact-iter 1 1 6)
+
+  (fact-iter (* 1 1)
+             (+ 1 1)
+             6)))
+
+  (fact-iter 1 2 6)))
+
+  (fact-iter 2 3 6))
+
+; Exercise 1.6.  Alyssa P. Hacker doesn't see why (if) needs to be provided as a special form. ``Why can't I just define it as an ordinary procedure in terms of cond?'' she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
+
