@@ -147,3 +147,52 @@
     (stream-enumerate-interval 100 100000)))
 (display "this should be 202: ")
 (stream-car (stream-cdr singleargsstillworks))
+
+; Exercise 3.51.  In order to take a closer look at delayed evaluation,
+; we will use the following procedure,
+; which simply returns its argument after printing it:
+(define (show x)
+  (display-line x)
+  x)
+; What does the interpreter print in response to evaluating each expression in the following sequence?
+
+(display "this should show nothing: ")
+(define x (stream-map show (stream-enumerate-interval 0 10)))
+(display " <- interesting why a zero here i wonder...")
+(display " because the first car in the stream is not delayed?")
+(newline)
+
+(display "this should show 1-5, then return 5")
+(stream-ref x 5)
+
+(display "this should show 6+7. and then return 7")
+(stream-ref x 7)
+
+
+;=== 3.5.2  Infinite Streams  ===
+(newline)
+
+(define (integers-starting-from n)
+  (cons-stream n (integers-starting-from (+ n 1))))
+; 🤯
+(define integers (integers-starting-from 1))
+
+(display "this should show 3: ")
+(stream-car (stream-cdr (stream-cdr integers)))
+
+; one i made up for myself ok
+(define (takewhile pred stream)
+  (if (null? (stream-car stream)) the-empty-stream
+    (let ((first (stream-car stream)))
+      (if (pred first) (cons first (takewhile pred (stream-cdr stream)))
+        the-empty-stream))))
+
+(display "this should show 1-99 ")
+(takewhile (lambda (x) (< x 100)) integers)
+
+
+
+(newline)
+(display "OK")
+(newline)
+
