@@ -112,7 +112,27 @@
                  result)
           result))))
 
-(define (delay exp) (memo-proc (lambda () exp)))
+; ---------------------------
+; HERE I GOT CONFUDDLED
+
+; (define (delay exp) (memo-proc (lambda () exp)))
+; 
+; (define myvar 1001)
+; (define testmoz (lambda (x) (set! myvar (+ myvar x))))
+; (define dtestmoz (delay testmoz))
+; (define (force p) (p))
+; (force dtestmoz)
+; (force dtestmoz)
+; (force dtestmoz)
+; (force dtestmoz)
+; (display "this should show 1002:")
+; (display myvar)
+; (newline)
+
+; the
+;(define (delay exp) (memo-proc (lambda () exp)))
+; (define (delay exp) (lambda () exp))
+; ---------------------------
 
 (display "this should be 10009: ")
 (stream-car
